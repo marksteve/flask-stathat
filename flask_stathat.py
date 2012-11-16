@@ -22,7 +22,7 @@ class StatHat(object):
         # Prep stathat counts and values on start of request
         app.before_request(self.before_request)
         # Send stathat requests at the end of the request
-        app.teardown_request(self.teardown)
+        app.teardown_request(self.teardown_request)
         # Don't send stats when in debug mode
         self.debug = app.config.get('DEBUG', False)
 
@@ -30,7 +30,7 @@ class StatHat(object):
         g._stathat_counts = []
         g._stathat_values = []
 
-    def teardown(self, exception):
+    def teardown_request(self, exception):
         # Send stathat requests only if there were no unhandled exceptions
         if exception:
             return
