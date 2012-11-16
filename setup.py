@@ -9,7 +9,7 @@ setup(
     author="Mark Steve Samson",
     author_email='hello@marksteve.com',
     zip_safe=False,
-    description="",
+    description="StatHat extension for Flask",
     py_modules=['flask_stathat'],
     install_requires=[
         'stathat==0.0.2',
