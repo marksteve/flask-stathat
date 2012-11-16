@@ -4,6 +4,11 @@
 
 [StatHat](https://www.stathat.com) extension for [Flask](http://flask.pocoo.org)
 
+## Install
+```python
+pip install Flask-StatHat
+```
+
 ## Setup
 
 ```python
