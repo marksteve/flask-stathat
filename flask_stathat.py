@@ -14,16 +14,26 @@ class StatHat(object):
             self.app = None
 
     def init_app(self, app):
-        STATHAT_EZ_KEY = app.config.get('STATHAT_EZ_KEY')
-        if not STATHAT_EZ_KEY:
+        ez_key = app.config.get('STATHAT_EZ_KEY')
+        if not ez_key:
             raise KeyError("STATHAT_EZ_KEY not specified")
+
         # stathat.py
-        self.stathat = stathat.StatHat(STATHAT_EZ_KEY)
+        self.stathat = stathat.StatHat(ez_key)
+
+        # Setup gevent if set to be used
+        self.use_gevent = app.config.get('STATHAT_USE_GEVENT', False)
+        if self.use_gevent:
+            pool_size = app.config.get('STATHAT_GEVENT_POOL_SIZE', 2)
+            from gevent.pool import Pool
+            self.pool = Pool(pool_size)
+
         # Prep stathat counts and values on start of request
         app.before_request(self.before_request)
+
         # Send stathat requests at the end of the request
         app.teardown_request(self.teardown_request)
-        # Don't send stats when in debug mode
+
         self.debug = app.config.get('DEBUG', False)
 
     def before_request(self):
@@ -37,10 +47,14 @@ class StatHat(object):
         # Don't send in debug mode
         if self.debug:
             return
-        for stat, count in g._stathat_counts:
-            self.stathat.count(stat, count)
-        for stat, value in g._stathat_values:
-            self.stathat.value(stat, value)
+        # Send stathat requests
+        for values, action in ((g._stathat_counts, self.stathat.count),
+                               (g._stathat_values, self.stathat.value)):
+            for stat, value in values:
+                if self.use_gevent:
+                    self.pool.spawn(action, stat, value)
+                else:
+                    action(stat, value)
 
     def count(self, stat, count):
         g._stathat_counts.append((stat, count))
