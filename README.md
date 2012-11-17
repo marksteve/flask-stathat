@@ -35,5 +35,15 @@ def signup():
     ...
 ```
 
+
+## Configuration
+
+```python
+app.config.update(STATHAT_EZ_KEY='STAHAT_EZ_KEY',
+                  STATHAT_USE_GEVENT=True,
+                  STATHAT_GEVENT_POOL_SIZE=10)
+```
+
+
 ## License
 MIT License
