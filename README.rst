@@ -4,6 +4,8 @@
 Flask-StatHat
 =============
 
+.. image:: http://img.shields.io/pypi/v/Flask-StatHat.png
+
 `StatHat <https://www.stathat.com>`_ extension for `Flask <http://flask.pocoo.org>`_
 
 -------
