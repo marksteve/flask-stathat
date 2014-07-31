@@ -59,8 +59,10 @@ class StatHat(object):
             self.session.post(self.url, data=json.dumps(req))
 
     def count(self, stat, count):
-        g._stathat_data.append(dict(stat=stat, count=count))
+        if hasattr(g, '_stathat_data'):
+            g._stathat_data.append(dict(stat=stat, count=count))
 
     def value(self, stat, value):
-        g._stathat_data.append(dict(stat=stat, value=value))
+        if hasattr(g, '_stathat_data'):
+            g._stathat_data.append(dict(stat=stat, value=value))
 
