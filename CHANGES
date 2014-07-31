@@ -1,3 +1,9 @@
+0.1.2
+    Fix for cases when stathat isn't setup (e.g. testing)
+0.1.1
+    Fix for cases when before_request isn't called
+0.1.0
+    Rewrite with requests and grequests
 0.0.3
     Add gevent support
 0.0.2
