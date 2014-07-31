@@ -52,7 +52,7 @@ Configuration
 Async
 -----
 
-`Flask-StatHat` will use `grequests` if it's installed
+``Flask-StatHat`` will use ``grequests`` if it's installed
 
 
 -------
