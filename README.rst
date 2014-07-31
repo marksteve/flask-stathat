@@ -12,10 +12,10 @@ Flask-StatHat
 Install
 -------
 ::
-    
+
     python
     pip install Flask-StatHat
-    
+
 -----
 Setup
 -----
@@ -38,13 +38,6 @@ Usage
         # The stathat requests won't be sent until the flask request
         # has been processed and no exceptions were raised
         ...
-    
-    @app.route('/signup')
-    @stathat.count_pageview
-    def signup():
-        # Sends a count with the request path as stat name
-        ...
-
 
 
 -------------
@@ -52,9 +45,15 @@ Configuration
 -------------
 ::
 
-    app.config.update(STATHAT_EZ_KEY='STAHAT_EZ_KEY',
-                      STATHAT_USE_GEVENT=True,
-                      STATHAT_GEVENT_POOL_SIZE=10)
+    app.config.update(STATHAT_EZ_KEY='STAHAT_EZ_KEY')
+
+
+-----
+Async
+-----
+
+`Flask-StatHat` will use `grequests` if it's installed
+
 
 -------
 License
