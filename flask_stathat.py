@@ -41,10 +41,13 @@ class StatHat(object):
         # Send stathat requests only if there were no unhandled exceptions
         if exception:
             return
+        data = getattr(g, '_stathat_data', None)
+        if not data:
+            return
         # Send stathat requests
         req = dict(
             ezkey=self.ez_key,
-            data=g._stathat_data,
+            data=data,
         )
         if use_grequests:
             requests.send(requests.post(
